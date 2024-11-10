@@ -21,4 +21,30 @@ function getEstablishment($id){
 	}
 	
 }
+
+function getDiscount($id){
+	global $mysqli_connect;
+
+	$fetchData = $mysqli_connect->query("SELECT give_discount FROM `establishment` WHERE ID_establishment = '$id'");
+	if($fetchData->num_rows > 0){
+		$row = $fetchData->fetch_array();
+		return $row['give_discount'];
+	}else{
+		return 0;
+	}
+	
+}
+
+function getSenior($id){
+	global $mysqli_connect;
+
+	$fetchData = $mysqli_connect->query("SELECT * FROM `senior_table` WHERE senior_id = '$id'");
+	if($fetchData->num_rows > 0){
+		$row = $fetchData->fetch_array();
+		return $row;
+	}else{
+		return null;
+	}
+	
+}
 ?>

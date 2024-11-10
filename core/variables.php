@@ -1,6 +1,7 @@
 <?php
 /** Core Path **/
 
+
 define("host","localhost");
 define("username","root");
 define("password","");
