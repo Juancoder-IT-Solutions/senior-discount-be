@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 04:04 AM
+-- Generation Time: Nov 10, 2024 at 11:55 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -110,11 +110,8 @@ CREATE TABLE `birthcertificate_table` (
 --
 
 INSERT INTO `birthcertificate_table` (`BC_ID`, `approve_id`, `senior_id`, `file_name_birth`, `date_created`) VALUES
-(42, 35, 8, 'uploads/birth_certificates/66424849b44c4_Screenshot 2023-03-31 004941.png', '2024-05-14'),
-(43, 35, 8, 'uploads/birth_certificates/66424849b5662_Screenshot 2023-03-31 005001.png', '2024-05-14'),
-(44, 36, 8, 'uploads/birth_certificates/6644fb31ae6ce_Screenshot 2023-03-31 004941.png', '2024-05-16'),
-(45, 37, 8, 'uploads/birth_certificates/6644fd9c1f48a_Screenshot 2023-03-31 004941.png', '2024-05-16'),
-(46, 38, 9, 'uploads/birth_certificates/6644fec0a27da_Screenshot 2023-03-31 004941.png', '2024-05-16');
+(42, 35, 8, 'uploads/birth_certificates/66f56e677d1a7_SchoolIDBack.jpg', '2024-05-14'),
+(46, 38, 9, 'uploads/birth_certificates/66f56e677d1a7_SchoolIDBack.jpg', '2024-05-16');
 
 -- --------------------------------------------------------
 
@@ -127,6 +124,8 @@ CREATE TABLE `establishment` (
   `establishment_name` varchar(255) NOT NULL,
   `establishment_address` varchar(255) NOT NULL,
   `give_discount` varchar(255) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` text NOT NULL,
   `date_created` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -134,9 +133,9 @@ CREATE TABLE `establishment` (
 -- Dumping data for table `establishment`
 --
 
-INSERT INTO `establishment` (`ID_establishment`, `establishment_name`, `establishment_address`, `give_discount`, `date_created`) VALUES
-(5, 'Merci', 'Bacolod City', '20', '2024-05-14'),
-(6, 'Foodman', 'Bacolod City', '15', '2024-05-14');
+INSERT INTO `establishment` (`ID_establishment`, `establishment_name`, `establishment_address`, `give_discount`, `username`, `password`, `date_created`) VALUES
+(5, 'Merci', 'Bacolod City', '2', 'merci', '0cc175b9c0f1b6a831c399e269772661', '2024-05-14'),
+(6, 'Foodman', 'Bacolod City', '15', 'foodman', '0cc175b9c0f1b6a831c399e269772661', '2024-05-14');
 
 -- --------------------------------------------------------
 
@@ -163,6 +162,31 @@ INSERT INTO `government_id` (`government_id`, `approve_id`, `senior_id`, `type`,
 (47, 36, 8, 'ssss', 'uploads/gov_id/6644fb31af50f_Screenshot 2023-03-31 004941.png', '2024-05-16'),
 (48, 37, 8, '1', 'uploads/gov_id/6644fd9c1f8d9_Screenshot 2023-03-31 004941.png', '2024-05-16'),
 (49, 38, 9, 'sss', 'uploads/gov_id/6644fec0a3292_Screenshot 2023-03-31 004941.png', '2024-05-16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guardian`
+--
+
+CREATE TABLE `guardian` (
+  `guardian_id` int(11) NOT NULL,
+  `senior_id_fk` int(11) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `middlename` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `relationship` varchar(255) NOT NULL,
+  `guardian_age` varchar(255) NOT NULL,
+  `phonenumber` varchar(255) DEFAULT NULL,
+  `emailaddress` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `guardian`
+--
+
+INSERT INTO `guardian` (`guardian_id`, `senior_id_fk`, `firstname`, `middlename`, `lastname`, `relationship`, `guardian_age`, `phonenumber`, `emailaddress`) VALUES
+(3, 8, 'kent', 'kent', 'kent', 'Friend', '23', '12345678910', 'kent@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -231,6 +255,7 @@ CREATE TABLE `transaction_history` (
   `transaction_id` int(11) NOT NULL,
   `ID_establishment` int(11) NOT NULL,
   `senior_id` int(11) NOT NULL,
+  `discount` decimal(6,2) NOT NULL,
   `date_added` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -238,9 +263,18 @@ CREATE TABLE `transaction_history` (
 -- Dumping data for table `transaction_history`
 --
 
-INSERT INTO `transaction_history` (`transaction_id`, `ID_establishment`, `senior_id`, `date_added`) VALUES
-(1, 5, 0, '2024-09-25 14:19:44'),
-(2, 6, 0, '2024-09-25 14:19:44');
+INSERT INTO `transaction_history` (`transaction_id`, `ID_establishment`, `senior_id`, `discount`, `date_added`) VALUES
+(1, 5, 8, '0.00', '2024-09-25 14:19:44'),
+(2, 6, 9, '0.00', '2024-09-25 14:19:44'),
+(3, 5, 8, '0.00', '2024-10-28 13:45:15'),
+(4, 5, 8, '0.00', '2024-10-28 13:45:19'),
+(5, 5, 8, '0.00', '2024-10-28 13:45:24'),
+(6, 0, 0, '0.00', '2024-10-28 13:47:17'),
+(7, 0, 0, '0.00', '2024-10-28 13:47:49'),
+(8, 5, 8, '0.00', '2024-10-28 13:48:10'),
+(9, 5, 8, '0.00', '2024-10-28 13:53:53'),
+(10, 5, 8, '0.00', '2024-10-28 13:54:02'),
+(11, 5, 8, '0.00', '2024-10-28 13:54:10');
 
 -- --------------------------------------------------------
 
@@ -385,7 +419,7 @@ ALTER TABLE `senior_table`
 -- AUTO_INCREMENT for table `transaction_history`
 --
 ALTER TABLE `transaction_history`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user_table`
